@@ -2,7 +2,10 @@
 <html lang="it">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#f6efe2">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
 <title>Pietro & Martina - Invito</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Great+Vibes&family=EB+Garamond:ital@0;1&display=swap');
@@ -29,15 +32,19 @@ html, body {
   font-family: 'EB Garamond', serif;
   color: var(--ink);
   overflow-x: hidden;
+  -webkit-text-size-adjust: 100%;
+  touch-action: manipulation;
 }
 
 .stage {
   min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 40px 20px 80px;
+  padding: 32px 18px calc(40px + env(safe-area-inset-bottom));
   position: relative;
+  width: 100%;
 }
 
 .stage::before {
@@ -60,26 +67,29 @@ html, body {
 
 .names {
   font-family: 'Great Vibes', cursive;
-  font-size: clamp(30px, 7vw, 42px);
+  font-size: clamp(28px, 9vw, 42px);
   color: var(--mattone-dark);
   text-align: center;
   margin: 0 0 6px 0;
-  line-height: 1.2;
+  line-height: 1.25;
   letter-spacing: 0.5px;
   opacity: 0;
   animation: fadeDown 1s ease-out 0.2s forwards;
+  padding: 0 8px;
+  word-break: keep-all;
 }
 
 .subtitle {
   font-family: 'Cormorant Garamond', serif;
   font-style: italic;
-  font-size: 15px;
+  font-size: clamp(12px, 3.2vw, 15px);
   color: var(--ink-soft);
   letter-spacing: 1.5px;
   text-transform: uppercase;
-  margin: 0 0 34px 0;
+  margin: 0 0 30px 0;
   opacity: 0;
   animation: fadeDown 1s ease-out 0.4s forwards;
+  text-align: center;
 }
 
 @keyframes fadeDown {
@@ -90,7 +100,7 @@ html, body {
 /* ===================== ENVELOPE ===================== */
 .envelope-wrap {
   perspective: 1400px;
-  width: min(88vw, 380px);
+  width: min(82vw, 340px);
   opacity: 0;
   animation: riseIn 0.9s ease-out 0.5s forwards;
 }
@@ -229,24 +239,29 @@ html, body {
 
 /* ===================== BUTTON ===================== */
 .open-btn {
-  margin-top: 38px;
-  padding: 14px 34px;
+  margin-top: 34px;
+  padding: 15px 30px;
+  min-height: 48px;
   background: var(--mattone);
   color: #fbf3e7;
   border: none;
   border-radius: 999px;
   font-family: 'Cormorant Garamond', serif;
-  font-size: 17px;
-  letter-spacing: 1.6px;
+  font-size: clamp(14px, 4vw, 17px);
+  letter-spacing: 1.4px;
   text-transform: uppercase;
   cursor: pointer;
   box-shadow: 0 10px 24px rgba(126,50,32,0.35);
   transition: transform 0.25s ease, box-shadow 0.25s ease, opacity 0.4s ease;
   opacity: 0;
   animation: fadeDown 1s ease-out 0.9s forwards;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  text-align: center;
+  max-width: 92vw;
 }
 .open-btn:hover { transform: translateY(-2px); box-shadow: 0 14px 28px rgba(126,50,32,0.42); }
-.open-btn:active { transform: translateY(0); }
+.open-btn:active { transform: translateY(0) scale(0.97); }
 .open-btn.gone {
   opacity: 0 !important;
   pointer-events: none;
@@ -259,11 +274,15 @@ html, body {
   top: 50%;
   left: 50%;
   width: min(90vw, 400px);
+  max-height: 88dvh;
   transform: translate(-50%, -46%) scale(0.15);
   opacity: 0;
   z-index: 20;
   pointer-events: none;
   transition: transform 1.1s cubic-bezier(.34,1.2,.4,1) 0.35s, opacity 0.5s ease 0.35s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .card-wrap.show {
@@ -279,6 +298,9 @@ html, body {
   box-shadow: 0 30px 60px rgba(74,51,36,0.4), 0 4px 12px rgba(74,51,36,0.2);
   padding: 10px;
   border: 1px solid rgba(168,70,46,0.15);
+  max-height: 78dvh;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .card-inner img {
@@ -291,7 +313,8 @@ html, body {
 .back-link {
   display: block;
   text-align: center;
-  margin-top: 18px;
+  margin-top: 16px;
+  padding: 8px 16px;
   font-family: 'Cormorant Garamond', serif;
   font-style: italic;
   font-size: 15px;
@@ -299,11 +322,20 @@ html, body {
   text-decoration: none;
   letter-spacing: 0.5px;
   cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
 }
-.back-link:hover { color: var(--mattone-dark); text-decoration: underline; }
+.back-link:hover, .back-link:active { color: var(--mattone-dark); text-decoration: underline; }
 
 @media (max-width: 380px) {
   .names { font-size: 30px; }
+  .subtitle { margin-bottom: 24px; }
+  .open-btn { margin-top: 26px; padding: 13px 22px; }
+}
+
+@media (max-height: 700px) {
+  .stage { padding-top: 20px; padding-bottom: 24px; align-items: flex-start; }
+  .names { margin-top: 4px; }
 }
 </style>
 </head>
